@@ -1,0 +1,703 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>إلى أجمل بنوتة في الدنيا 💕</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts: Cairo & Amiri -->
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&family=Amiri:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+    <!-- Canvas Confetti -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        rosepink: {
+                            50: '#fff1f2',
+                            100: '#ffe4e6',
+                            200: '#fecdd3',
+                            300: '#fda4af',
+                            400: '#fb7185',
+                            500: '#f43f5e',
+                            600: '#e11d48',
+                            900: '#4c0519',
+                        },
+                        nightpastel: '#2a1b28',
+                        carddark: 'rgba(42, 27, 40, 0.75)',
+                    },
+                    fontFamily: {
+                        cairo: ['Cairo', 'sans-serif'],
+                        amiri: ['Amiri', 'serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'Cairo', sans-serif;
+            background: linear-gradient(135deg, #2a1b28 0%, #4a1935 50%, #1f0d1b 100%);
+            min-height: 100vh;
+            overflow-x: hidden;
+            color: #ffe4e6;
+            user-select: none;
+        }
+
+        /* Floating Hearts Animation Background */
+        .hearts-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+            overflow: hidden;
+        }
+
+        .bg-heart {
+            position: absolute;
+            bottom: -50px;
+            color: rgba(251, 113, 133, 0.35);
+            animation: floatUp linear infinite;
+            filter: drop-shadow(0 0 8px rgba(251, 113, 133, 0.4));
+        }
+
+        @keyframes floatUp {
+            0% {
+                transform: translateY(0) rotate(0deg) scale(0.8);
+                opacity: 0;
+            }
+            20% {
+                opacity: 0.8;
+            }
+            80% {
+                opacity: 0.8;
+            }
+            100% {
+                transform: translateY(-110vh) rotate(360deg) scale(1.3);
+                opacity: 0;
+            }
+        }
+
+        /* Glassmorphism Effect */
+        .glass-card {
+            background: rgba(255, 241, 242, 0.07);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(253, 164, 175, 0.2);
+            box-shadow: 0 8px 32px 0 rgba(244, 63, 94, 0.2);
+        }
+
+        .glass-card-hover {
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .glass-card-hover:hover {
+            transform: translateY(-6px) scale(1.02);
+            border-color: rgba(251, 113, 133, 0.5);
+            box-shadow: 0 15px 35px 0 rgba(244, 63, 94, 0.35);
+        }
+
+        /* Glow Effects */
+        .glow-pink {
+            box-shadow: 0 0 25px rgba(244, 63, 94, 0.6);
+        }
+        
+        .text-glow {
+            text-shadow: 0 0 12px rgba(251, 113, 133, 0.6);
+        }
+
+        /* Click Heart Particle */
+        .click-heart {
+            position: fixed;
+            pointer-events: none;
+            z-index: 9999;
+            animation: clickHeartAnim 1.2s ease-out forwards;
+            font-size: 20px;
+        }
+
+        @keyframes clickHeartAnim {
+            0% {
+                transform: translate(-50%, -50%) scale(0.5) rotate(0deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translate(-50%, -120px) scale(1.6) rotate(25deg);
+                opacity: 0;
+            }
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #2a1b28;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #fb7185;
+            border-radius: 4px;
+        }
+
+        /* Pulse Heart Icon */
+        .beat-heart {
+            animation: heartBeat 1.3s infinite ease-in-out;
+        }
+        @keyframes heartBeat {
+            0%, 100% { transform: scale(1); }
+            14% { transform: scale(1.25); }
+            28% { transform: scale(1); }
+            42% { transform: scale(1.18); }
+            70% { transform: scale(1); }
+        }
+    </style>
+</head>
+<body class="relative flex flex-col min-h-screen justify-between items-center" onclick="createClickHeart(event)">
+
+    <!-- Dynamic Floating Hearts Background -->
+    <div class="hearts-container" id="heartsContainer"></div>
+
+    <!-- MAIN WRAPPER -->
+    <div class="w-full max-w-4xl px-4 py-8 z-10 flex-grow flex flex-col justify-center items-center">
+
+        <!-- ========================================== -->
+        <!-- SCREEN 1: LOGIN / PASSWORD LOCK SCREEN -->
+        <!-- ========================================== -->
+        <div id="screenLogin" class="w-full max-w-md transition-all duration-700 transform scale-100 opacity-100">
+            <div class="glass-card rounded-3xl p-8 text-center relative overflow-hidden border border-rosepink-300/30 glow-pink">
+                
+                <!-- Decorative top heart -->
+                <div class="mb-6 inline-block relative">
+                    <div class="w-20 h-20 bg-gradient-to-tr from-rosepink-600 to-rosepink-400 rounded-full flex items-center justify-center shadow-lg beat-heart mx-auto">
+                        <i class="fa-solid fa-heart text-3xl text-white"></i>
+                    </div>
+                </div>
+
+                <h1 class="text-3xl font-bold mb-2 text-rosepink-200 text-glow">هللووو يا أميرتي 💕</h1>
+                <p class="text-rosepink-100/80 text-sm mb-6 leading-relaxed">
+                    الصفحة دي عشانك انتي بس يا ملكتي.. دخلي الباسورد عشان تفتحي 🗝️
+                </p>
+
+                <!-- Password Form -->
+                <form id="loginForm" onsubmit="handleLogin(event)" class="space-y-4">
+                    <div class="relative">
+                        <input type="password" id="passwordInput" placeholder="اكتبي السر هنا..." 
+                            class="w-full bg-black/40 border border-rosepink-400/40 rounded-2xl px-5 py-3.5 pr-12 text-center text-rosepink-100 placeholder-rosepink-300/40 focus:outline-none focus:border-rosepink-400 focus:ring-2 focus:ring-rosepink-500/50 transition-all font-medium">
+                        
+                        <button type="button" onclick="togglePasswordVisibility()" class="absolute left-4 top-1/2 -translate-y-1/2 text-rosepink-300 hover:text-white transition">
+                            <i id="eyeIcon" class="fa-regular fa-eye"></i>
+                        </button>
+                    </div>
+
+                    <!-- Error Alert -->
+                    <div id="errorMessage" class="hidden bg-rose-950/80 border border-rose-500/50 text-rose-200 text-xs p-3 rounded-xl transition-all duration-300 text-center animate-bounce">
+                        <i class="fa-solid fa-circle-exclamation text-rose-400 ml-1"></i>
+                        <span id="errorText">كلمة السر هي حاجة خاصة بينا فالستريك احم 💕 - جربي تاني يا قلبي</span>
+                    </div>
+
+                    <!-- Submit Button -->
+                    <button type="submit" 
+                        class="w-full bg-gradient-to-r from-rosepink-500 via-rosepink-600 to-rosepink-500 hover:from-rosepink-600 hover:to-rosepink-400 text-white font-bold py-3.5 rounded-2xl shadow-lg hover:shadow-rosepink-500/40 transition duration-300 flex items-center justify-center space-x-2 space-x-reverse group">
+                        <span>افتحي القلب ✨</span>
+                        <i class="fa-solid fa-key group-hover:rotate-45 transition-transform duration-300"></i>
+                    </button>
+                </form>
+
+                <!-- Hint Button -->
+                <div class="mt-6 pt-4 border-t border-rosepink-300/10 flex justify-between items-center text-xs text-rosepink-300/70">
+                    <button onclick="showHintModal()" class="hover:text-rosepink-200 underline transition">
+                        <i class="fa-regular fa-lightbulb ml-1"></i> محتاجة تلميح؟
+                    </button>
+                    <span class="opacity-60">مصنوع لحبيبة قلبي ❤️</span>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- ========================================== -->
+        <!-- SCREEN 2: ROMANTIC CONTENT DASHBOARD -->
+        <!-- ========================================== -->
+        <div id="screenDashboard" class="w-full hidden transition-all duration-1000 transform opacity-0 scale-95 space-y-8">
+            
+            <!-- Floating Header -->
+            <header class="glass-card rounded-3xl p-6 text-center relative overflow-hidden flex flex-col items-center">
+                
+                <!-- Music Toggle floating button -->
+                <button id="musicToggleBtn" onclick="toggleAudio()" class="absolute top-4 left-4 bg-rosepink-500/20 hover:bg-rosepink-500/40 border border-rosepink-400/40 text-rosepink-200 px-3.5 py-2 rounded-full text-xs font-semibold flex items-center space-x-2 space-x-reverse transition backdrop-blur-md">
+                    <i id="musicIcon" class="fa-solid fa-music animate-pulse"></i>
+                    <span id="musicText">تشغيل الموسيقى 🎵</span>
+                </button>
+
+                <div class="inline-block p-3 bg-rosepink-500/10 rounded-full mb-3 mt-2 border border-rosepink-400/20">
+                    <span class="text-4xl">👑</span>
+                </div>
+                <h2 class="text-3xl md:text-4xl font-black text-rosepink-100 text-glow mb-2">
+                    نورتي عالمك الخاص يا ملكة قلبي 💕
+                </h2>
+                <p class="text-rosepink-200/90 text-sm md:text-base max-w-xl leading-relaxed font-light">
+                    الصفحة دي موجودة عشان تفكرك ديماً أنك أجمل وأهم شخص في حياتي وأن ابتسامتك هي كل سعادتي ومفيش حاجة اهم من اني شوفك فرحانة ومرتاحة
+                </p>
+                
+                <!-- Love Counter -->
+                <div class="mt-6 inline-flex items-center space-x-4 space-x-reverse bg-black/30 border border-rosepink-400/30 px-6 py-2.5 rounded-2xl text-xs md:text-sm text-rosepink-200">
+                    <i class="fa-solid fa-heart text-rosepink-400 beat-heart"></i>
+                    <span>بحبك واعشقك واموت فيكي ومت فيكي ومغرم فيكي و اهواكي وحبي لكي يزيد كل ثانية ♾️</span>
+                </div>
+            </header>
+
+            <!-- Quick Action: Emotional Hug / Tabtaba -->
+            <section class="text-center">
+                <button onclick="triggerComfortMessage()" 
+                    class="glass-card glass-card-hover px-8 py-5 rounded-3xl bg-gradient-to-r from-rosepink-600/40 via-purple-900/40 to-rosepink-600/40 border border-rosepink-400/50 text-white font-bold text-lg md:text-xl shadow-xl flex items-center justify-center space-x-3 space-x-reverse mx-auto group">
+                    <span class="group-hover:scale-110 transition-transform"> رسالة وطبطبة لقلبك دلوقتي عشان بطنك تخف شوي💖</span>
+                    <i class="fa-solid fa-wand-magic-sparkles text-rosepink-300 group-hover:rotate-12 transition-transform"></i>
+                </button>
+            </section>
+
+            <!-- Interactive Grid Section -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+
+                <!-- Card 1: Reasons why I love you -->
+                <div class="glass-card glass-card-hover rounded-3xl p-6 flex flex-col justify-between">
+                    <div>
+                        <div class="w-12 h-12 bg-rosepink-500/20 rounded-2xl flex items-center justify-center mb-4 text-rosepink-300 text-xl border border-rosepink-400/30">
+                            <i class="fa-solid fa-star"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-rosepink-100 mb-2">ليه؟ ✨</h3>
+                        <p class="text-rosepink-200/80 text-sm leading-relaxed mb-4">
+                            عشان انتي اهم شخص قالدنيا ممكن يتقاله كلام حلو وانتي اجمل واطيب وارق واحدة فالحياة وطبعا لازم كل فترة اسوي شي جديد لزوجتي حبيبتي
+                        </p>
+                    </div>
+                    <button onclick="showCardDetails('reasons')" class="w-full bg-rosepink-500/20 hover:bg-rosepink-500/40 text-rosepink-200 py-2.5 rounded-xl text-xs font-semibold transition border border-rosepink-400/30">
+                        اقرأي المزيد من التفاصيل 💌
+                    </button>
+                </div>
+
+                <!-- Card 2: Safe Haven Message -->
+                <div class="glass-card glass-card-hover rounded-3xl p-6 flex flex-col justify-between">
+                    <div>
+                        <div class="w-12 h-12 bg-rosepink-500/20 rounded-2xl flex items-center justify-center mb-4 text-rosepink-300 text-xl border border-rosepink-400/30">
+                            <i class="fa-solid fa-shield-heart"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-rosepink-100 mb-2">وقت ما تضايقي 🌿</h3>
+                        <p class="text-rosepink-200/80 text-sm leading-relaxed mb-4">
+                            افتكري ان زوجك معاكي دايما ومابتركك لحالك في اي شي ومافي شي يقدر يضايق عيوني وروحي واي شي يضايقك حتى لو مني تعالي قوليلي وانرمي فحضني مثل ماتحبي وما بخليكي الا وانتي مرتاحة يا حبيبتي
+                        </p>
+                    </div>
+                    <button onclick="showCardDetails('comfort')" class="w-full bg-rosepink-500/20 hover:bg-rosepink-500/40 text-rosepink-200 py-2.5 rounded-xl text-xs font-semibold transition border border-rosepink-400/30">
+                        افتحي لما تكوني زعلانة ويارب ماتزعلي ابدا
+                    </button>
+                </div>
+
+                <!-- Card 3: Love Letters Envelope -->
+                <div class="glass-card glass-card-hover rounded-3xl p-6 flex flex-col justify-between">
+                    <div>
+                        <div class="w-12 h-12 bg-rosepink-500/20 rounded-2xl flex items-center justify-center mb-4 text-rosepink-300 text-xl border border-rosepink-400/30">
+                            <i class="fa-solid fa-envelope-open-text"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-rosepink-100 mb-2">جواب خاص ليكي 📜</h3>
+                        <p class="text-rosepink-200/80 text-sm leading-relaxed mb-4">
+                            حاولت افرحك باي شي ياعمري وبظل احاول للابد عندي كم زوجة انا عشان احاول افرحها دايما وماابيكي ياعمري تزعلي من اي شي اسويه والله كل شي يطلع مني حتى لو بشكل ماحلو يكون وراه حبي لكي واهتمامي لكي بس تعرفي زوجك احيانا طريقته تكون غريبة ف سامحيني على اي شي سويته ماعجبك بحاول دايما احسن من نفسي عشان زوجتي الحلوة
+                        </p>
+                    </div>
+                    <button onclick="showCardDetails('letter')" class="w-full bg-rosepink-500/20 hover:bg-rosepink-500/40 text-rosepink-200 py-2.5 rounded-xl text-xs font-semibold transition border border-rosepink-400/30">
+                        افتحي الجواب 💌
+                    </button>
+                </div>
+
+            </div>
+
+            <!-- Heartwarming Affirmations Section -->
+            <div class="glass-card rounded-3xl p-6 md:p-8">
+                <h3 class="text-xl font-bold text-rosepink-200 mb-4 flex items-center space-x-2 space-x-reverse">
+                    <i class="fa-solid fa-sparkles text-rosepink-400"></i>
+                    <span>تذكيرات يومية مهمة احم احم:</span>
+                </h3>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs md:text-sm">
+                    <div class="bg-black/30 p-4 rounded-2xl border border-rosepink-400/20 flex items-center space-x-3 space-x-reverse">
+                        <span class="text-xl">🌸</span>
+                        <span class="text-rosepink-100">أنتي جميلة بكل حالاتك وفي عيوني أنتي أجمل واحدة في الكون وفالحقيقة كمان طبعا</span>
+                    </div>
+                    <div class="bg-black/30 p-4 rounded-2xl border border-rosepink-400/20 flex items-center space-x-3 space-x-reverse">
+                        <span class="text-xl">☀️</span>
+                        <span class="text-rosepink-100">وجودك في حياتي بيخليها احسن كل يوم حياتي بدونك ماحياة</span>
+                    </div>
+                    <div class="bg-black/30 p-4 rounded-2xl border border-rosepink-400/20 flex items-center space-x-3 space-x-reverse">
+                        <span class="text-xl">☕</span>
+                        <span class="text-rosepink-100">ابتسمي دايما واي زعل خلي زوجك يتعامل معه خليني اشوف ابتسامتك الحلوة دايما ابتسامتك عندي بالدنيا ومافيها</span>
+                    </div>
+                    <div class="bg-black/30 p-4 rounded-2xl border border-rosepink-400/20 flex items-center space-x-3 space-x-reverse">
+                        <span class="text-xl">👑</span>
+                        <span class="text-rosepink-100">ولا تنسي انك اقوى واجمل واحلى واشطر بنوتة فالكون كله</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Cute Interactive Click Note -->
+            <div class="text-center py-4">
+                <p class="text-xs text-rosepink-300/60 animate-pulse">
+                    💡:) دوسي في أي مكان على الشاشة عشان تطلعلك قلوب وردية بتطير 💕
+                </p>
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- Footer -->
+    <footer class="w-full text-center py-4 text-xs text-rosepink-300/50 z-10 border-t border-rosepink-300/10 backdrop-blur-sm">
+        مخصوص لزوجتي حبيبتي صغنونتي💕  
+    </footer>
+
+    <!-- ========================================== -->
+    <!-- MODALS / POPUPS -->
+    <!-- ========================================== -->
+
+    <!-- Modal 1: Hint Modal -->
+    <div id="hintModal" class="fixed inset-0 z-50 bg-black/70 backdrop-blur-md hidden flex items-center justify-center p-4 opacity-0 transition-opacity duration-300">
+        <div class="glass-card max-w-sm w-full rounded-3xl p-6 text-center border border-rosepink-400/40 relative transform scale-95 transition-transform duration-300">
+            <button onclick="closeModal('hintModal')" class="absolute top-4 left-4 text-rosepink-300 hover:text-white">
+                <i class="fa-solid fa-xmark text-lg"></i>
+            </button>
+            <div class="w-14 h-14 bg-rosepink-500/20 rounded-full flex items-center justify-center mx-auto mb-4 text-rosepink-300 text-2xl border border-rosepink-400/30">
+                <i class="fa-regular fa-lightbulb"></i>
+            </div>
+            <h4 class="text-lg font-bold text-rosepink-100 mb-2">تلميح كلمة السر ✨</h4>
+            <p class="text-rosepink-200/90 text-xs leading-relaxed mb-6">
+                ❤️كلمة السر هي كلمة انا اخترعتها امبارح تقريبا (مثلاً: <span class="font-bold text-rosepink-400 underline">بحبك</span> أو <span class="font-bold text-rosepink-400 underline">جمع بين اسمنا</span>).
+            </p>
+            <button onclick="closeModal('hintModal')" class="w-full bg-rosepink-500 hover:bg-rosepink-600 text-white font-semibold py-2.5 rounded-xl text-xs transition">
+                فهمت خلاص 💕
+            </button>
+        </div>
+    </div>
+
+    <!-- Modal 2: Random Comfort Hug Popup -->
+    <div id="comfortModal" class="fixed inset-0 z-50 bg-black/70 backdrop-blur-md hidden flex items-center justify-center p-4 opacity-0 transition-opacity duration-300">
+        <div class="glass-card max-w-md w-full rounded-3xl p-8 text-center border border-rosepink-400/40 relative transform scale-95 transition-transform duration-300">
+            <button onclick="closeModal('comfortModal')" class="absolute top-4 left-4 text-rosepink-300 hover:text-white">
+                <i class="fa-solid fa-xmark text-lg"></i>
+            </button>
+            <div class="text-4xl mb-3 animate-bounce">💌</div>
+            <h4 class="text-xl font-bold text-rosepink-100 mb-3">جرعة حب سريعة 💕</h4>
+            <div id="comfortMessageText" class="text-rosepink-100 text-sm font-amiri text-lg leading-relaxed bg-black/30 p-5 rounded-2xl border border-rosepink-400/20 mb-6 italic">
+                <!-- Dynamic text injected here -->
+            </div>
+            <button onclick="triggerComfortMessage()" class="w-full bg-gradient-to-r from-rosepink-500 to-rosepink-600 hover:from-rosepink-600 hover:to-rosepink-700 text-white font-bold py-3 rounded-xl text-xs transition shadow-md">
+                رسالة تانية لزوجتي الحلوة 💕
+            </button>
+        </div>
+    </div>
+
+    <!-- Modal 3: Content Details Popup -->
+    <div id="detailModal" class="fixed inset-0 z-50 bg-black/70 backdrop-blur-md hidden flex items-center justify-center p-4 opacity-0 transition-opacity duration-300">
+        <div class="glass-card max-w-lg w-full rounded-3xl p-6 md:p-8 border border-rosepink-400/40 relative transform scale-95 transition-transform duration-300 max-h-[85vh] overflow-y-auto">
+            <button onclick="closeModal('detailModal')" class="absolute top-4 left-4 text-rosepink-300 hover:text-white">
+                <i class="fa-solid fa-xmark text-lg"></i>
+            </button>
+            <div id="detailContent">
+                <!-- Dynamic Content Injected Here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- AUDIO SETUP (Web Audio API Synthesizer fallback + Ambient synth generator) -->
+    <script>
+        // Valid Passwords List (Supports Arabic variations)
+        const validPasswords = ["بحبك", "سيرينتي", "سيرينة", "love", "Sirad", "1234"];
+
+        // Comfort Messages Database
+        const comfortMessages = [
+            "لو حسيتي ان العالم ضدك مع ان ماحد يتجرأ اعرفي ان زوجك دايما معاكي وفقلبك وبكون ضد العالم عشانك ياقلبي 💕",
+            "انتي نعمتي وجنتي فالارض الحياة بدونك ماتنعاش مااقدر اجلس ثانية بدونك انتي حياتي نفسها يا حياتي✨",
+            "لمة تحسي بتعب او ضغط او ذكرى حلوة جاتك تذكري دايما ان زوجك معكي في اي مكان و زمان تعالي فحضني لين ترتاحي ياروحي 🌸",
+            "رسالة منك كافية انها تغير يومي كله للاحلى وحياتي كلها كمان بس يومي الله لايرحمني من كلامك وضحكتك الحلوة بحافظ على ابتسامتك للابد يا ملكتي👑",
+            "جمالك في ملامحك وقلبك وصوتك وكلامك وروحك وكل شي حرفيا يا وحلوتي💖",
+            "انتي اجمل زوجة فالعالم في كل حالاتك وكلامك وتصرفاتك انتي الاجمل دايما ياجميلتي💕",
+            "اي حلم تحلميه او قرار تاخذيه انا دايما في ضهرك وداعمك و بشجعك لين تحققي حلمك ياحلمي✨"
+        ];
+
+        // Detailed Content Database
+        const detailData = {
+            reasons: `
+                <div class="text-center mb-6">
+                    <span class="text-4xl">🌟</span>
+                    <h4 class="text-2xl font-bold text-rosepink-100 mt-2">احبك يا احلى زوجة فالعالم💕</h4>
+                </div>
+                <div class="space-y-4 text-rosepink-100 text-sm leading-relaxed font-light">
+                    <p class="bg-black/20 p-4 rounded-2xl border border-rosepink-400/20">
+                        ❤️ <strong class="text-rosepink-300">قلبك حلو:</strong> احب قلبك واحب حب قلبك لي, قلبك الطيوب الحلو ذا مافي مثله يا قلبي💕
+                    </p>
+                    <p class="bg-black/20 p-4 rounded-2xl border border-rosepink-400/20">
+                        😊 <strong class="text-rosepink-300">ضحكتك تجنن:</strong> ضحكتك لحالها بالدنيا ومافيها لمة اشوف ضحكتك او حتى ابتسامتك حياتي تنور يا دنيتي❤️
+                    </p>
+                    <p class="bg-black/20 p-4 rounded-2xl border border-rosepink-400/20">
+                        🕊️ <strong class="text-rosepink-300">هدوئك وراحتك:</strong> حرفيا وانا معاكي برتاح كثير والازعاج اللي يكون في راسي وجسمي يهدى بوجودك انتي هدوئي وراحتي يا عالمي الهادي الامن💕
+                    </p>
+                    <p class="bg-black/20 p-4 rounded-2xl border border-rosepink-400/20">
+                        ✨ <strong class="text-rosepink-300">تفاصيلك:</strong> كل تفصيلة فيكي حتى لو صغيرة انا ذايب فيها واحبها مرة تفاصيلك كلها بدون استثناء تجنن و تطيرني من جمالها وحلاوتها اعشقك كل تفاصيلك يا عشقي❤️
+                    </p>
+                </div>
+            `,
+            comfort: `
+                <div class="text-center mb-6">
+                    <span class="text-4xl">🌿</span>
+                    <h4 class="text-2xl font-bold text-rosepink-100 mt-2">ملجأك الآمن وقت الزعل💕</h4>
+                </div>
+                <div class="space-y-4 text-rosepink-100 text-sm leading-relaxed">
+                    <p class="text-center text-rosepink-200 font-amiri text-lg">
+                        "يا زوجتي وعالمي كله في اي وقت تحسي فيه بزعل او حتى عدم راحة الجأي لي مابرتاح الا لمة اتاكد انك بخير انا بيتك وملجأك❤️"
+                    </p>
+                    <div class="bg-rosepink-500/10 p-5 rounded-2xl border border-rosepink-400/30 text-xs space-y-2">
+                        <p>❤️ماتخلي اي شي يزعلك او يعكر يومك لان اصلا مافي شي يستاهل زعل حلوتي انتي احلى مافالعالم واقوى من اي شي ممكن يزعلك</p>
+                        <p>❤️وطبعا انا هنا معكي دايما بساعدك بكل اللي اقدر عليه واللي مااقدر عليه المهم حلوتي ماتكون زعلانة</p>
+                        <p>💕سويلك شي تشربيه وتعالي فحضني نحل كل الزعل مافي شي يتجرأ يزعلك طول مااحنا مع بعض</p>
+                    </div>
+                </div>
+            `,
+            letter: `
+                <div class="text-center mb-6">
+                    <span class="text-4xl">💌</span>
+                    <h4 class="text-2xl font-bold text-rosepink-100 mt-2">رسالة لزوجتي حلوتي</h4>
+                </div>
+                <div class="bg-black/40 p-6 rounded-2xl border border-rosepink-400/30 text-rosepink-100 text-base font-amiri leading-loose space-y-4">
+                    <p>لاميرتي وملكتي</p>
+                    <p>
+                        حبيت اكتبلك ذا الكلام عشان يكون ذكرى حلوة بيننا كل ماتفتحيها تضحكتي وتتذكري ان مجرد وجودك في حياتي يفرحني❤️💕
+                    </p>
+                    <p>
+                       💕بسوي المستحيل عشان احافظ عليكي وعلى حبنا وضحكنتك الحلوة ذي وبكون سندك يا حلوتي وملجأك ومكانك الامن وماازعلك ابدا❤️
+                    </p>
+                    <p class="text-left font-bold text-rosepink-300">
+                        ~ بحبك للأبد 💕
+                    </p>
+                </div>
+            `
+        };
+
+        // 1. Password Protection Logic
+        function handleLogin(e) {
+            e.preventDefault();
+            const input = document.getElementById('passwordInput').value.trim();
+            const errorMsg = document.getElementById('errorMessage');
+
+            if (validPasswords.includes(input.toLowerCase())) {
+                errorMsg.classList.add('hidden');
+                unlockDashboard();
+            } else {
+                errorMsg.classList.remove('hidden');
+                // Shake effect on card
+                const card = document.getElementById('screenLogin');
+                card.classList.add('animate-pulse');
+                setTimeout(() => card.classList.remove('animate-pulse'), 500);
+            }
+        }
+
+        function togglePasswordVisibility() {
+            const input = document.getElementById('passwordInput');
+            const icon = document.getElementById('eyeIcon');
+            if (input.type === 'password') {
+                input.type = 'text';
+                icon.classList.remove('fa-eye');
+                icon.classList.add('fa-eye-slash');
+            } else {
+                input.type = 'password';
+                icon.classList.remove('fa-eye-slash');
+                icon.classList.add('fa-eye');
+            }
+        }
+
+        // 2. Unlock Dashboard Transition & Confetti
+        function unlockDashboard() {
+            const screenLogin = document.getElementById('screenLogin');
+            const screenDashboard = document.getElementById('screenDashboard');
+
+            screenLogin.classList.add('scale-95', 'opacity-0');
+            setTimeout(() => {
+                screenLogin.classList.add('hidden');
+                screenDashboard.classList.remove('hidden');
+                setTimeout(() => {
+                    screenDashboard.classList.remove('scale-95', 'opacity-0');
+                    screenDashboard.classList.add('scale-100', 'opacity-100');
+                    triggerRoseConfetti();
+                }, 50);
+            }, 500);
+        }
+
+        // 3. Heart & Rose Petal Confetti Effect
+        function triggerRoseConfetti() {
+            const duration = 3 * 1000;
+            const animationEnd = Date.now() + duration;
+
+            (function frame() {
+                confetti({
+                    particleCount: 5,
+                    angle: 60,
+                    spread: 55,
+                    origin: { x: 0 },
+                    colors: ['#fb7185', '#f43f5e', '#ffe4e6', '#fda4af']
+                });
+                confetti({
+                    particleCount: 5,
+                    angle: 120,
+                    spread: 55,
+                    origin: { x: 1 },
+                    colors: ['#fb7185', '#f43f5e', '#ffe4e6', '#fda4af']
+                });
+
+                if (Date.now() < animationEnd) {
+                    requestAnimationFrame(frame);
+                }
+            })();
+        }
+
+        // 4. Floating Hearts Generator in Background
+        function createBackgroundHearts() {
+            const container = document.getElementById('heartsContainer');
+            const heartIcons = ['fa-heart', 'fa-sparkles', 'fa-heart font-light'];
+            
+            for (let i = 0; i < 25; i++) {
+                const heart = document.createElement('i');
+                const randomIcon = heartIcons[Math.floor(Math.random() * heartIcons.length)];
+                heart.className = `fa-solid ${randomIcon} bg-heart`;
+                
+                // Random position & timing
+                heart.style.left = Math.random() * 100 + 'vw';
+                heart.style.animationDuration = (Math.random() * 6 + 6) + 's';
+                heart.style.animationDelay = (Math.random() * 5) + 's';
+                heart.style.fontSize = (Math.random() * 20 + 12) + 'px';
+                
+                container.appendChild(heart);
+            }
+        }
+
+        // 5. Interactive Touch/Click Floating Heart Particle
+        function createClickHeart(e) {
+            // Avoid triggering particle when clicking on buttons to prevent lag
+            if (e.target.closest('button') || e.target.closest('input')) return;
+
+            const heart = document.createElement('div');
+            heart.className = 'click-heart';
+            heart.innerHTML = '💖';
+            heart.style.left = e.clientX + 'px';
+            heart.style.top = e.clientY + 'px';
+            
+            document.body.appendChild(heart);
+            setTimeout(() => {
+                heart.remove();
+            }, 1200);
+        }
+
+        // 6. Modals & Popups Controls
+        function showHintModal() {
+            openModal('hintModal');
+        }
+
+        function triggerComfortMessage() {
+            const randomIndex = Math.floor(Math.random() * comfortMessages.length);
+            document.getElementById('comfortMessageText').innerText = comfortMessages[randomIndex];
+            openModal('comfortModal');
+            triggerRoseConfetti();
+        }
+
+        function showCardDetails(type) {
+            const content = detailData[type] || '';
+            document.getElementById('detailContent').innerHTML = content;
+            openModal('detailModal');
+        }
+
+        function openModal(id) {
+            const modal = document.getElementById(id);
+            modal.classList.remove('hidden');
+            setTimeout(() => {
+                modal.classList.remove('opacity-0');
+                modal.children[0].classList.remove('scale-95');
+                modal.children[0].classList.add('scale-100');
+            }, 10);
+        }
+
+        function closeModal(id) {
+            const modal = document.getElementById(id);
+            modal.children[0].classList.remove('scale-100');
+            modal.children[0].classList.add('scale-95');
+            modal.classList.add('opacity-0');
+            setTimeout(() => {
+                modal.classList.add('hidden');
+            }, 300);
+        }
+
+        const bgMusic = new Audio('perfect.mp3');
+        bgMusic.loop = true; 
+        let isPlayingAudio = false;
+
+        function toggleAudio() {
+            const icon = document.getElementById('musicIcon');
+            const text = document.getElementById('musicText');
+
+            if (!isPlayingAudio) {
+                bgMusic.play().then(() => {
+                    isPlayingAudio = true;
+                    icon.className = "fa-solid fa-volume-high animate-bounce";
+                    text.innerText = "🎵 الاغنية شغالة🎵";
+                }).catch(error => {
+                    console.log("خطأ في تشغيل الصوت: ", error);
+                    alert("تأكد أن ملف 'perfect.mp3' موجود في نفس المجلد مع صفحة الـ HTML!");
+                });
+            } else {
+                bgMusic.pause();
+                isPlayingAudio = false;
+                icon.className = "fa-solid fa-music";   
+                text.innerText = "🎵تشغيل الاغنية🎵";
+            }
+        }
+
+
+        function startRomanticAmbientSound() {
+            try {
+                const AudioContext = window.AudioContext || window.webkitAudioContext;
+                audioCtx = new AudioContext();
+
+                // Gentle synthesizer chords generator
+                const notes = [261.63, 329.63, 392.00, 523.25]; // C major chord frequencies
+                notes.forEach((freq, index) => {
+                    const osc = audioCtx.createOscillator();
+                    const gain = audioCtx.createGain();
+
+                    osc.type = 'sine';
+                    osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
+
+                    // Soft pulsing volume
+                    gain.gain.setValueAtTime(0.02, audioCtx.currentTime);
+                    gain.gain.exponentialRampToValueAtTime(0.05, audioCtx.currentTime + 2);
+
+                    osc.connect(gain);
+                    gain.connect(audioCtx.destination);
+
+                    osc.start();
+                });
+            } catch (e) {
+                console.log("Web Audio API not supported");
+            }
+        }
+
+        function stopRomanticAmbientSound() {
+            if (audioCtx) {
+                audioCtx.close();
+                audioCtx = null;
+            }
+        }
+
+        // Initialize Background Hearts on Page Load
+        window.onload = function() {
+            createBackgroundHearts();
+        };
+    </script>
+</body>
+</html>
